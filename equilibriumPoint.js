@@ -1,13 +1,17 @@
 equilibriumPoint = a => {
-    // let sum = a => a.reduce((ac, v) => ac + v, 0);
-    let sum = a => {
-        let s = 0;
-        for (let i = 0; i < a.length; s += a[i], ++i);
-        return s;
-    };
-    for (let i = 0; i < a.length; ++i)
-        if (sum(a.slice(0, i)) == sum(a.slice(i + 1))) return i + 1;
+    let s = t = 0;
+    for (let i of a) t += i;
+    for (let i in a) {
+        if (s == t - s - a[i]) return +i + 1;
+        s += a[i];
+    }
     return -1;
+}
+
+equilibriumPoint = a => {
+    let s = i = 0;
+    a.map(v => s += v);
+    return -a.every(v => v + (s -= a[i++] * 2)) | i;
 }
 
 console.log(equilibriumPoint([10, 5, 3, 5, 2, 2, 6, 8]));
